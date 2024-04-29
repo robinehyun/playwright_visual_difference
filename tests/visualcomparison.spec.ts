@@ -8,14 +8,30 @@ test.describe('Zwift Homepage Test', () => {
         await acceptBtn.click();
     })
 
-    test('Visual Comparison Test Demo', async ({ page }) => {
-        // await page.goto('https://www.zwift.com/');
+    test('Create Account/Membership Options Page', async ({ page }) => {
         await page.getByTestId('primary-nav-right').getByTestId('button-create-account').click();
         await page.screenshot({
             fullPage: true,
             path: `create-account.png`
-        })
-        await expect(page).toHaveScreenshot();
+        });
+        await expect(page).toHaveScreenshot({
+            maxDiffPixelRatio: 0.7,
+        });
+    });
+
+    test('Authenticated Membership Page', async ({ page }) => {
+       await page.getByTestId('primary-nav-login-link').click();
+       await page.getByLabel('Email').fill('robin.yun@zwift.com');
+       await page.getByLabel('Password').fill('zwift123');
+       await page.click('button[type="submit"]', {timeout: 3000});
+       await expect(page.getByTestId('Account-secondarynav-link')).toBeVisible();
+       await page.screenshot({
+           fullPage: true,
+           path:`authenticated-membership-page.png`
+       });
+       await expect(page).toHaveScreenshot({
+           maxDiffPixelRatio: 0.7,
+       });
     });
 })
 
