@@ -22,7 +22,7 @@ test.describe('Zwift Homepage Test', () => {
     test('Authenticated Membership Page', async ({ page }) => {
        await page.getByTestId('primary-nav-login-link').click();
        await page.getByLabel('Email').fill('robin.yun@zwift.com');
-       await page.getByLabel('Password').fill('zwift123');
+       await page.getByLabel('Password').fill('----');
        await page.click('button[type="submit"]', {timeout: 3000});
        await expect(page.getByTestId('Account-secondarynav-link')).toBeVisible();
        await page.screenshot({
